@@ -64,10 +64,14 @@
 
     /* フィルター帯 */
     .filters-section{padding:15px 20px;background:rgba(35,35,35,.3);border-top:1px solid var(--border-color);}
-    .filters-grid{
-      display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-      gap:10px;max-width:1200px;margin:0 auto 15px;
-    }
+.filters-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  row-gap: 10px;        /* 縦方向はそのまま */
+  column-gap: 16px;     /* 横方向だけ広げる（必要なら 20px などに） */
+  max-width: 1200px;
+  margin: 0 auto 15px;
+}
     .filter-select{
       background:var(--bg-tertiary);border:1px solid var(--border-color);border-radius:4px;color:var(--text-main);
       font-size:12px;padding:6px 10px;transition:.2s;width:100%;
@@ -85,6 +89,13 @@
   justify-self:end;
   align-self:end;
   padding-left:16px;  /* ← ここを追加してセレクトとボタンの間隔を確保 */
+}
+
+    @media (min-width: 900px){
+  .filter-actions{
+    grid-column: span 2;   /* ← もっと離したければ span 3 に */
+    justify-self: end;     /* 右端に寄せる */
+  }
 }
 
     /* ボタンの共通スタイル */
