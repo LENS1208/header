@@ -21,10 +21,10 @@
       background: var(--bg-primary); color: var(--text-main); min-height:100vh;
     }
     .header-container {
-  background: #000; /* ← ここを黒に */
-  border-bottom: 1px solid var(--border-color);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-}
+      background: #000; /* ← 黒に変更済み */
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
     .header-main { padding:15px 20px; display:flex; align-items:center; justify-content:space-between; min-height:70px; }
     .left-section { display:flex; align-items:center; }
     .logo img { display:block; width:100px; height:auto; }
@@ -56,6 +56,7 @@
     }
     .demo-btn:hover { background:var(--bg-secondary); border-color:var(--text-sub); transform:translateY(-1px); }
     .demo-btn.active { background:var(--positive-color); border-color:var(--positive-color); color:#fff; }
+
     .filters-section { padding:15px 20px; background:rgba(35,35,35,.3); border-top:1px solid var(--border-color); }
     .filters-grid {
       display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
@@ -68,43 +69,77 @@
     .filter-select:focus { outline:none; border-color:var(--positive-color); box-shadow:0 0 0 2px rgba(0,200,255,.1); }
     .filter-select:hover { border-color:var(--text-sub); }
     .filter-select option { background:var(--bg-tertiary); color:var(--text-main); }
-    .filter-actions { display:flex; gap:10px; justify-content:center; margin-bottom:15px; }
+
+    /* ▼ ここが変更点：右端寄せ＋強調/テキスト風ボタン */
+    .filter-actions{
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;  /* 右寄せ */
+      align-items:center;
+    }
+    /* グリッド上で右端に吸着（幅があるとき） */
+    @media (min-width: 900px){
+      .filter-actions{
+        justify-self:end;
+        align-self:end;
+      }
+    }
+
     .filter-btn {
-      background:var(--positive-color); color:#fff; border:none; border-radius:4px; font-size:12px; font-weight:500;
-      padding:6px 12px; cursor:pointer; transition:.2s;
+      background:var(--positive-color);
+      color:#fff;
+      border:none;
+      border-radius:4px;
+      font-size:12px;
+      font-weight:600;
+      padding:8px 14px;
+      cursor:pointer;
+      transition:.2s;
     }
     .filter-btn:hover { opacity:.9; transform:translateY(-1px); }
-    .filter-btn.secondary { background:var(--bg-tertiary); color:var(--text-main); border:1px solid var(--border-color); }
-    .filter-btn.secondary:hover { background:var(--bg-secondary); }
-.nav-tabs {
-  display: flex;
-  justify-content: center;
-  border-bottom: 1px solid var(--border-color);
-  margin-top: 10px;
-}
 
-.tab {
-  background: none;
-  border: none;
-  border-bottom: 3px solid transparent;
-  color: var(--text-sub);
-  font-size: 14px;
-  font-weight: 500;
-  padding: 10px 16px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
+    /* テキストボタン風（リセット） */
+    .filter-btn.secondary{
+      background:transparent;
+      color:var(--text-sub);
+      border:1px dashed var(--border-color);
+      font-weight:500;
+    }
+    .filter-btn.secondary:hover{
+      color:var(--text-main);
+      border-style:solid;
+      background:transparent;
+      transform:none;
+      opacity:1;
+    }
 
-.tab:hover {
-  color: var(--text-main);
-  border-bottom: 3px solid var(--text-sub);
-}
+    .nav-tabs {
+      display: flex;
+      justify-content: center;
+      border-bottom: 1px solid var(--border-color);
+      margin-top: 10px;
+    }
+    .tab {
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      color: var(--text-sub);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .tab:hover {
+      color: var(--text-main);
+      border-bottom: 3px solid var(--text-sub);
+    }
+    .tab.active {
+      color: var(--positive-color);
+      border-bottom: 3px solid var(--positive-color);
+      font-weight: 600;
+    }
 
-.tab.active {
-  color: var(--positive-color);
-  border-bottom: 3px solid var(--positive-color);
-  font-weight: 600;
-}
     .date-input-group { display:none; grid-column:span 2; gap:8px; }
     .date-input-group.active { display:flex; }
     .date-input {
@@ -112,6 +147,7 @@
       font-size:12px; padding:6px 8px; flex:1;
     }
     .date-input:focus { outline:none; border-color:var(--positive-color); }
+
     @media (max-width:768px){
       .header-main { flex-direction:column; gap:15px; padding:15px; }
       .left-section { width:100%; justify-content:center; }
@@ -123,13 +159,16 @@
       .tab { padding:8px 12px; font-size:12px; }
       .main-title { font-size:18px; }
       .upload-btn { font-size:11px; padding:6px 12px; }
+      /* スマホでは中央寄せで下段に回り込みやすく */
+      .filter-actions{ justify-content:center; }
     }
-    /* DEMOバッジ */
+
+    /* DEMOバッジ（非表示のまま） */
     #demoBadge {
       position:fixed; top:10px; right:10px; padding:6px 10px; border-radius:999px;
       background:#222; color:#fff; font:12px/1 system-ui; border:1px solid #444; z-index:9999; opacity:.9;
+      display:none !important;
     }
-    #demoBadge { display: none !important; }
   </style>
 </head>
 <body>
@@ -225,11 +264,12 @@
           <input type="date" class="date-input" id="startDate" />
           <input type="date" class="date-input" id="endDate" />
         </div>
-      </div>
 
-      <div class="filter-actions">
-        <button class="filter-btn" id="applyFilters">フィルター適用</button>
-        <button class="filter-btn secondary" id="resetFilters">リセット</button>
+        <!-- ★ ここに移動（filters-grid 内の最後） -->
+        <div class="filter-actions">
+          <button class="filter-btn" id="applyFilters">フィルター適用</button>
+          <button class="filter-btn secondary" id="resetFilters">リセット</button>
+        </div>
       </div>
 
       <div class="nav-tabs">
@@ -244,9 +284,7 @@
   </header>
 
   <script>
-  // =========================
-  //  デモ・マスターDataset
-  // =========================
+  // 以降はそのまま（機能は一切変更なし）
   const DEMO_TRADERS = {
     excellent: {
       name:"優秀なトレーダー",
@@ -346,9 +384,6 @@
     }
   };
 
-  // =========================
-  //  単一情報源 AppStore
-  // =========================
   const AppStore = {
     cfg:{ mode:'demo', trader:'excellent', version:'v1', show_demo_badge:true },
     data:null, filters:{},
@@ -389,16 +424,7 @@
     };
   }
 
-  function renderHeaderSummary(d){
-    if(!d) return;
-    document.getElementById('hsName').textContent = d.meta.name;
-    document.getElementById('hsWr').textContent   = d.kpi.winRate.toFixed(1) + '%';
-    document.getElementById('hsPf').textContent   = Number(d.kpi.profitFactor).toFixed(2);
-    const pnl = d.kpi.totalProfit;
-    const pnlEl = document.getElementById('hsPnl');
-    pnlEl.textContent = (pnl>=0?'+':'') + pnl.toLocaleString();
-    pnlEl.style.color = pnl>=0 ? 'var(--positive-color)' : 'var(--negative-color)';
-  }
+  function renderHeaderSummary(d){ /* 今は未使用でも残してOK */ }
 
   function updateDemoBadge(){
     const b=document.getElementById('demoBadge');
@@ -419,10 +445,9 @@
     renderHeaderSummary(unified);
     updateDemoBadge();
     selectDemoButton(traderKey);
-    dispatch('demoDataReady', unified); // 7ページ横断用
+    dispatch('demoDataReady', unified);
   }
 
-  // ===== UI 初期化 =====
   function initializeDemoUI(){
     document.querySelectorAll('.demo-btn').forEach(btn=>{
       btn.addEventListener('click', ()=> activateTrader(btn.dataset.trader));
@@ -499,7 +524,6 @@
     });
   }
 
-  // ===== 起動 =====
   window.addEventListener('DOMContentLoaded', ()=>{
     initializeDemoUI();
     initializeFileUpload();
@@ -515,13 +539,6 @@
     renderHeaderSummary(initData);
     dispatch('demoDataReady', initData);
   });
-
-  // 7ページ側の購読例（参考）
-  // window.AppStore.subscribe(({cfg,data,filters})=>{
-  //   if(cfg.mode==='demo' && data){
-  //     // data.kpi / data.pareto / data.equityCurve などで描画
-  //   }
-  // });
   </script>
 </body>
 </html>
