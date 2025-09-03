@@ -76,13 +76,35 @@
     .filter-btn:hover { opacity:.9; transform:translateY(-1px); }
     .filter-btn.secondary { background:var(--bg-tertiary); color:var(--text-main); border:1px solid var(--border-color); }
     .filter-btn.secondary:hover { background:var(--bg-secondary); }
-    .nav-tabs { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; max-width:1000px; margin:0 auto; }
-    .tab {
-      background:var(--bg-tertiary); color:var(--text-sub); border:1px solid var(--border-color); padding:8px 16px;
-      border-radius:20px; font-size:13px; font-weight:500; cursor:pointer; transition:.2s; white-space:nowrap;
-    }
-    .tab:hover { color:var(--text-main); border-color:var(--text-sub); transform:translateY(-1px); }
-    .tab.active { background:var(--positive-color); color:#fff; border-color:var(--positive-color); font-weight:600; }
+.nav-tabs {
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid var(--border-color);
+  margin-top: 10px;
+}
+
+.tab {
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: var(--text-sub);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab:hover {
+  color: var(--text-main);
+  border-bottom: 3px solid var(--text-sub);
+}
+
+.tab.active {
+  color: var(--positive-color);
+  border-bottom: 3px solid var(--positive-color);
+  font-weight: 600;
+}
     .date-input-group { display:none; grid-column:span 2; gap:8px; }
     .date-input-group.active { display:flex; }
     .date-input {
