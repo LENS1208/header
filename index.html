@@ -77,10 +77,15 @@
     .filter-select option{background:var(--bg-tertiary);color:var(--text-main);}
 
     /* ボタン行：右端に寄せつつ、左に少し間隔を確保（←今回の肝） */
-    .filter-actions{
-      display:flex;gap:10px;justify-content:flex-end;align-items:center;
-      justify-self:end;align-self:end;margin-left:12px; /* 左にスペースを付与 */
-    }
+.filter-actions{
+  display:flex;
+  gap:10px;
+  justify-content:flex-end;
+  align-items:center;
+  justify-self:end;
+  align-self:end;
+  padding-left:16px;  /* ← ここを追加してセレクトとボタンの間隔を確保 */
+}
 
     /* ボタンの共通スタイル */
     .filter-btn{
