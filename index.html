@@ -1,202 +1,147 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>FX取引分析ツール - 修正版ヘッダー（統率デモ組込版）</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root {
-      --bg-primary: #000000;
-      --bg-secondary: #181818;
-      --bg-tertiary: #232323;
-      --border-color: #373737;
-      --positive-color: #00c8ff;
-      --negative-color: #ff3200;
-      --text-main: #e0e0e0;
-      --text-sub: #aaa;
+    :root{
+      --bg-primary:#000000;
+      --bg-secondary:#181818;
+      --bg-tertiary:#232323;
+      --border-color:#373737;
+      --positive-color:#00c8ff;
+      --negative-color:#ff3200;
+      --text-main:#e0e0e0;
+      --text-sub:#aaa;
     }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      font-family: 'Segoe UI','Hiragino Sans','Yu Gothic UI',system-ui,sans-serif;
-      background: var(--bg-primary); color: var(--text-main); min-height:100vh;
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:'Segoe UI','Hiragino Sans','Yu Gothic UI',system-ui,sans-serif;
+      background:var(--bg-primary);
+      color:var(--text-main);
+      min-height:100vh;
     }
-    .header-container {
-      background: #000; /* ← 黒に変更済み */
-      border-bottom: 1px solid var(--border-color);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    }
-    .header-main { padding:15px 20px; display:flex; align-items:center; justify-content:space-between; min-height:70px; }
-    .left-section { display:flex; align-items:center; }
-    .logo img { display:block; width:100px; height:auto; }
-    .center-section { flex:1; text-align:center; min-width:300px; }
-    .main-title { font-size:20px; font-weight:700; color:var(--text-main); margin-bottom:4px; }
-    .subtitle { font-size:12px; color:var(--text-sub); font-weight:400; }
-    .header-kpi { margin-top:8px; font-size:12px; color:var(--text-sub); display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
-    .header-kpi b { color:#fff; }
-    .right-section { display:flex; align-items:center; gap:15px; }
-    .upload-wrapper { position:relative; }
-    .upload-btn {
-      background:var(--positive-color); color:#fff; border:none; border-radius:4px;
-      font-size:13px; font-weight:500; padding:8px 16px; cursor:pointer; transition:.2s;
-      white-space:nowrap;
-    }
-    .upload-btn:hover { opacity:.9; transform:translateY(-1px); }
-    .file-input { display:none; }
-    .file-info {
-      position:absolute; top:100%; left:0; background:var(--bg-tertiary); border:1px solid var(--border-color);
-      border-radius:4px; padding:8px 12px; font-size:11px; color:var(--text-sub); margin-top:5px; white-space:nowrap; z-index:10;
-    }
-    .demo-section { display:flex; align-items:center; gap:8px; }
-    .demo-label { font-size:12px; color:var(--text-sub); white-space:nowrap; }
-    .demo-buttons { display:flex; gap:4px; }
-    .demo-btn {
-      background:var(--bg-tertiary); color:var(--text-main); border:1px solid var(--border-color);
-      border-radius:4px; font-size:12px; font-weight:600; width:28px; height:28px;
-      display:flex; align-items:center; justify-content:center; cursor:pointer; transition:.2s;
-    }
-    .demo-btn:hover { background:var(--bg-secondary); border-color:var(--text-sub); transform:translateY(-1px); }
-    .demo-btn.active { background:var(--positive-color); border-color:var(--positive-color); color:#fff; }
 
-    .filters-section { padding:15px 20px; background:rgba(35,35,35,.3); border-top:1px solid var(--border-color); }
-    .filters-grid {
-      display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-      gap:10px; margin-bottom:15px; max-width:1200px; margin-left:auto; margin-right:auto;
+    /* ヘッダー */
+    .header-container{
+      background:#000; /* 黒 */
+      border-bottom:1px solid var(--border-color);
+      box-shadow:0 4px 20px rgba(0,0,0,.5);
     }
-    .filter-select {
-      background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:4px; color:var(--text-main);
-      font-size:12px; padding:6px 10px; transition:.2s; width:100%;
-    }
-    .filter-select:focus { outline:none; border-color:var(--positive-color); box-shadow:0 0 0 2px rgba(0,200,255,.1); }
-    .filter-select:hover { border-color:var(--text-sub); }
-    .filter-select option { background:var(--bg-tertiary); color:var(--text-main); }
+    .header-main{padding:15px 20px;display:flex;align-items:center;justify-content:space-between;min-height:70px;}
+    .left-section{display:flex;align-items:center;}
+    .logo img{display:block;width:100px;height:auto;}
+    .center-section{flex:1;text-align:center;min-width:300px;}
+    .main-title{font-size:20px;font-weight:700;color:var(--text-main);margin-bottom:4px;}
+    .subtitle{font-size:12px;color:var(--text-sub);font-weight:400;}
+    .right-section{display:flex;align-items:center;gap:15px;}
 
-    /* ▼ ここが変更点：右端寄せ＋強調/テキスト風ボタン */
+    /* アップロード */
+    .upload-wrapper{position:relative;}
+    .upload-btn{
+      background:var(--positive-color);color:#fff;border:none;border-radius:4px;
+      font-size:13px;font-weight:500;padding:8px 16px;cursor:pointer;transition:.2s;white-space:nowrap;
+    }
+    .upload-btn:hover{opacity:.9;transform:translateY(-1px);}
+    .file-input{display:none;}
+    .file-info{
+      position:absolute;top:100%;left:0;background:var(--bg-tertiary);border:1px solid var(--border-color);
+      border-radius:4px;padding:8px 12px;font-size:11px;color:var(--text-sub);margin-top:5px;white-space:nowrap;z-index:10;
+    }
+
+    /* デモスイッチ */
+    .demo-section{display:flex;align-items:center;gap:8px;}
+    .demo-label{font-size:12px;color:var(--text-sub);white-space:nowrap;}
+    .demo-buttons{display:flex;gap:4px;}
+    .demo-btn{
+      background:var(--bg-tertiary);color:var(--text-main);border:1px solid var(--border-color);
+      border-radius:4px;font-size:12px;font-weight:600;width:28px;height:28px;
+      display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;
+    }
+    .demo-btn:hover{background:var(--bg-secondary);border-color:var(--text-sub);transform:translateY(-1px);}
+    .demo-btn.active{background:var(--positive-color);border-color:var(--positive-color);color:#fff;}
+
+    /* フィルター帯 */
+    .filters-section{padding:15px 20px;background:rgba(35,35,35,.3);border-top:1px solid var(--border-color);}
+    .filters-grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+      gap:10px;max-width:1200px;margin:0 auto 15px;
+    }
+    .filter-select{
+      background:var(--bg-tertiary);border:1px solid var(--border-color);border-radius:4px;color:var(--text-main);
+      font-size:12px;padding:6px 10px;transition:.2s;width:100%;
+    }
+    .filter-select:focus{outline:none;border-color:var(--positive-color);box-shadow:0 0 0 2px rgba(0,200,255,.1);}
+    .filter-select:hover{border-color:var(--text-sub);}
+    .filter-select option{background:var(--bg-tertiary);color:var(--text-main);}
+
+    /* ボタン行：右端に寄せつつ、左に少し間隔を確保（←今回の肝） */
     .filter-actions{
-      display:flex;
-      gap:10px;
-      justify-content:flex-end;  /* 右寄せ */
-      align-items:center;
-    }
-    /* グリッド上で右端に吸着（幅があるとき） */
-    @media (min-width: 900px){
-      .filter-actions{
-        justify-self:end;
-        align-self:end;
-      }
+      display:flex;gap:10px;justify-content:flex-end;align-items:center;
+      justify-self:end;align-self:end;margin-left:12px; /* 左にスペースを付与 */
     }
 
-.filter-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;   /* ← 改行防止 */
-  min-height: 36px;      /* ← 高さを統一 */
-  background: var(--positive-color);
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 8px 14px;
-  cursor: pointer;
-  transition: .2s;
-}
-
-#applyFilters {
-  margin-left: 12px;  /* ← セレクトボックスとの間にスペース */
-}
-    
-.filter-btn:hover { opacity: .9; transform: translateY(-1px); }
-
-    /* テキストボタン風（リセット） */
-/* テキストボタン風（リセット） */
-.filter-btn.secondary{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;   /* ← 改行防止 */
-  min-height: 36px;      /* ← 高さを統一 */
-  background: transparent;
-  color: var(--text-sub);
-  border: 1px dashed var(--border-color);
-  font-weight: 500;
-  padding: 8px 14px;     /* 強調ボタンと同じ余白 */
-}
-.filter-btn.secondary:hover{
-  color: var(--text-main);
-  border-style: solid;
-  background: transparent;
-  transform: none;
-  opacity: 1;
-}
-
-
-    .nav-tabs {
-      display: flex;
-      justify-content: center;
-      border-bottom: 1px solid var(--border-color);
-      margin-top: 10px;
+    /* ボタンの共通スタイル */
+    .filter-btn{
+      display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;
+      min-height:36px;background:var(--positive-color);color:#fff;border:none;border-radius:4px;
+      font-size:12px;font-weight:600;padding:8px 14px;cursor:pointer;transition:.2s;
     }
-    .tab {
-      background: none;
-      border: none;
-      border-bottom: 3px solid transparent;
-      color: var(--text-sub);
-      font-size: 14px;
-      font-weight: 500;
-      padding: 10px 16px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .tab:hover {
-      color: var(--text-main);
-      border-bottom: 3px solid var(--text-sub);
-    }
-    .tab.active {
-      color: var(--positive-color);
-      border-bottom: 3px solid var(--positive-color);
-      font-weight: 600;
-    }
+    .filter-btn:hover{opacity:.9;transform:translateY(-1px);}
 
-    .date-input-group { display:none; grid-column:span 2; gap:8px; }
-    .date-input-group.active { display:flex; }
-    .date-input {
-      background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:4px; color:var(--text-main);
-      font-size:12px; padding:6px 8px; flex:1;
+    /* リセット：テキストボタン風 */
+    .filter-btn.secondary{
+      background:transparent;color:var(--text-sub);border:1px dashed var(--border-color);
+      font-weight:500;padding:8px 14px;min-height:36px;white-space:nowrap;
     }
-    .date-input:focus { outline:none; border-color:var(--positive-color); }
+    .filter-btn.secondary:hover{color:var(--text-main);border-style:solid;background:transparent;transform:none;opacity:1;}
 
+    /* タブ（ブラウザ風下線） */
+    .nav-tabs{display:flex;justify-content:center;border-bottom:1px solid var(--border-color);margin-top:10px;}
+    .tab{
+      background:none;border:none;border-bottom:3px solid transparent;color:var(--text-sub);
+      font-size:14px;font-weight:500;padding:10px 16px;cursor:pointer;transition:all .2s ease;
+    }
+    .tab:hover{color:var(--text-main);border-bottom:3px solid var(--text-sub);}
+    .tab.active{color:var(--positive-color);border-bottom:3px solid var(--positive-color);font-weight:600;}
+
+    /* 期間カスタム */
+    .date-input-group{display:none;grid-column:span 2;gap:8px;}
+    .date-input-group.active{display:flex;}
+    .date-input{
+      background:var(--bg-tertiary);border:1px solid var(--border-color);border-radius:4px;color:var(--text-main);
+      font-size:12px;padding:6px 8px;flex:1;
+    }
+    .date-input:focus{outline:none;border-color:var(--positive-color);}
+
+    /* レスポンシブ */
     @media (max-width:768px){
-      .header-main { flex-direction:column; gap:15px; padding:15px; }
-      .left-section { width:100%; justify-content:center; }
-      .center-section { order:1; }
-      .right-section { order:2; flex-wrap:wrap; justify-content:center; gap:10px; }
-      .demo-section { flex-direction:column; gap:5px; }
-      .filters-grid { grid-template-columns:1fr; gap:8px; }
-      .nav-tabs { gap:6px; }
-      .tab { padding:8px 12px; font-size:12px; }
-      .main-title { font-size:18px; }
-      .upload-btn { font-size:11px; padding:6px 12px; }
-      /* スマホでは中央寄せで下段に回り込みやすく */
-      .filter-actions{ justify-content:center; }
-.filter-actions{
-  margin-left: 12px;   /* ← ここでセル間の距離を追加 */
-}
+      .header-main{flex-direction:column;gap:15px;padding:15px;}
+      .left-section{width:100%;justify-content:center;}
+      .center-section{order:1;}
+      .right-section{order:2;flex-wrap:wrap;justify-content:center;gap:10px;}
+      .demo-section{flex-direction:column;gap:5px;}
+      .filters-grid{grid-template-columns:1fr;gap:8px;}
+      .nav-tabs{gap:6px;}
+      .tab{padding:8px 12px;font-size:12px;}
+      .main-title{font-size:18px;}
+      .upload-btn{font-size:11px;padding:6px 12px;}
+      .filter-actions{justify-content:center;margin-left:0;} /* スマホでは中央寄せ＆左余白を無効化 */
     }
 
     /* DEMOバッジ（非表示のまま） */
-    #demoBadge {
-      position:fixed; top:10px; right:10px; padding:6px 10px; border-radius:999px;
-      background:#222; color:#fff; font:12px/1 system-ui; border:1px solid #444; z-index:9999; opacity:.9;
-      display:none !important;
+    #demoBadge{
+      position:fixed;top:10px;right:10px;padding:6px 10px;border-radius:999px;background:#222;color:#fff;
+      font:12px/1 system-ui;border:1px solid #444;z-index:9999;opacity:.9;display:none!important;
     }
   </style>
 </head>
 <body>
   <div id="demoBadge" hidden>DEMO</div>
+
   <header class="header-container">
     <div class="header-main">
-      <!-- 左上ロゴ（固定PNG） -->
       <div class="left-section">
         <div class="logo">
           <img src="algo-logo-web-b.png" alt="FX Analysis Logo" width="100" height="66" />
@@ -255,7 +200,8 @@
         </select>
 
         <select class="filter-select" id="dayFilter">
-          <option value="all">すべての曜日</option><option value="weekdays">平日のみ</option>
+          <option value="all">すべての曜日</option>
+          <option value="weekdays">平日のみ</option>
           <option value="weekend">週末のみ</option>
           <optgroup label="個別選択">
             <option value="monday">月曜日</option><option value="tuesday">火曜日</option>
@@ -266,19 +212,24 @@
         </select>
 
         <select class="filter-select" id="periodFilter">
-          <option value="all">すべての期間</option><option value="30days">直近30日</option>
-          <option value="90days">直近90日</option><option value="6months">直近6ヶ月</option>
-          <option value="1year">直近1年</option><option value="custom">カスタム期間</option>
+          <option value="all">すべての期間</option>
+          <option value="30days">直近30日</option>
+          <option value="90days">直近90日</option>
+          <option value="6months">直近6ヶ月</option>
+          <option value="1year">直近1年</option>
+          <option value="custom">カスタム期間</option>
         </select>
 
         <select class="filter-select" id="positionFilter">
           <option value="all">すべてのポジション</option>
-          <option value="long">ロング（買い）のみ</option><option value="short">ショート（売り）のみ</option>
+          <option value="long">ロング（買い）のみ</option>
+          <option value="short">ショート（売り）のみ</option>
         </select>
 
         <select class="filter-select" id="performanceFilter">
           <option value="all">すべての取引</option>
-          <option value="profit">利益取引のみ</option><option value="loss">損失取引のみ</option>
+          <option value="profit">利益取引のみ</option>
+          <option value="loss">損失取引のみ</option>
         </select>
 
         <div class="date-input-group" id="customDateGroup">
@@ -286,7 +237,7 @@
           <input type="date" class="date-input" id="endDate" />
         </div>
 
-        <!-- ★ ここに移動（filters-grid 内の最後） -->
+        <!-- 右端に吸着するボタン群（同じ行に並ぶ／幅が狭いときは次段へ） -->
         <div class="filter-actions">
           <button class="filter-btn" id="applyFilters">フィルター適用</button>
           <button class="filter-btn secondary" id="resetFilters">リセット</button>
@@ -305,261 +256,218 @@
   </header>
 
   <script>
-  // 以降はそのまま（機能は一切変更なし）
-  const DEMO_TRADERS = {
-    excellent: {
-      name:"優秀なトレーダー",
-      description:"勝率75%、高い期待値を持つトレーダーのデータ",
-      kpi:{ totalTrades:150, winRate:75.2, totalProfit:320000, avgProfit:12800, avgLoss:-4200, expectedValue:2133, profitFactor:3.05 },
-      delta:{ pf:0.25, ev:1200, wr:-2.1 },
-      pareto:{ top:[45000,38000,32000,28000,25000], bottom:[-8000,-6500,-5200,-4800,-4100] },
-      streaks:{ win:[8,6,5,4,3], lose:[2,2,1,1,1] }
-    },
-    average: {
-      name:"平均的なトレーダー",
-      description:"勝率55%、標準的なパフォーマンスのトレーダーデータ",
-      kpi:{ totalTrades:120, winRate:55.8, totalProfit:45000, avgProfit:8500, avgLoss:-6200, expectedValue:375, profitFactor:1.18 },
-      delta:{ pf:-0.15, ev:-800, wr:1.8 },
-      pareto:{ top:[25000,18000,15000,12000,10500], bottom:[-15000,-12000,-9500,-8200,-7100] },
-      streaks:{ win:[5,4,3,3,2], lose:[4,3,3,2,2] }
-    },
-    poor: {
-      name:"改善が必要なトレーダー",
-      description:"勝率38%、損失超過のトレーダーデータ",
-      kpi:{ totalTrades:95, winRate:38.9, totalProfit:-85000, avgProfit:6200, avgLoss:-8900, expectedValue:-895, profitFactor:0.65 },
-      delta:{ pf:-0.45, ev:-2100, wr:-8.3 },
-      pareto:{ top:[18000,12000,9500,8200,7100], bottom:[-25000,-18000,-15000,-12000,-10500] },
-      streaks:{ win:[3,2,2,1,1], lose:[7,5,4,4,3] }
-    }
-  };
+    // ===== デモデータ =====
+    const DEMO_TRADERS={
+      excellent:{name:"優秀なトレーダー",description:"勝率75%、高い期待値を持つトレーダーのデータ",
+        kpi:{totalTrades:150,winRate:75.2,totalProfit:320000,avgProfit:12800,avgLoss:-4200,expectedValue:2133,profitFactor:3.05},
+        delta:{pf:0.25,ev:1200,wr:-2.1},
+        pareto:{top:[45000,38000,32000,28000,25000],bottom:[-8000,-6500,-5200,-4800,-4100]},
+        streaks:{win:[8,6,5,4,3],lose:[2,2,1,1,1]}},
+      average:{name:"平均的なトレーダー",description:"勝率55%、標準的なパフォーマンスのトレーダーデータ",
+        kpi:{totalTrades:120,winRate:55.8,totalProfit:45000,avgProfit:8500,avgLoss:-6200,expectedValue:375,profitFactor:1.18},
+        delta:{pf:-0.15,ev:-800,wr:1.8},
+        pareto:{top:[25000,18000,15000,12000,10500],bottom:[-15000,-12000,-9500,-8200,-7100]},
+        streaks:{win:[5,4,3,3,2],lose:[4,3,3,2,2]}},
+      poor:{name:"改善が必要なトレーダー",description:"勝率38%、損失超過のトレーダーデータ",
+        kpi:{totalTrades:95,winRate:38.9,totalProfit:-85000,avgProfit:6200,avgLoss:-8900,expectedValue:-895,profitFactor:0.65},
+        delta:{pf:-0.45,ev:-2100,wr:-8.3},
+        pareto:{top:[18000,12000,9500,8200,7100],bottom:[-25000,-18000,-15000,-12000,-10500]},
+        streaks:{win:[3,2,2,1,1],lose:[7,5,4,4,3]}}
+    };
 
-  const CALCULATIONS = {
-    getWinTrades: (d)=> Math.round(d.kpi.totalTrades * d.kpi.winRate / 100),
-    getLossTrades: (d)=> Math.round(d.kpi.totalTrades * (100 - d.kpi.winRate) / 100),
-    getTotalWinAmount: (d)=> Math.round(CALCULATIONS.getWinTrades(d) * d.kpi.avgProfit),
-    getTotalLossAmount: (d)=> Math.round(Math.abs(CALCULATIONS.getLossTrades(d) * d.kpi.avgLoss)),
-    getMaxWin: (d)=> d.pareto.top[0],
-    getMinWin: (d)=> d.pareto.top[d.pareto.top.length - 1],
-    getMaxLoss: (d)=> Math.abs(d.pareto.bottom[0]),
-    getMinLoss: (d)=> Math.abs(d.pareto.bottom[d.pareto.bottom.length - 1])
-  };
+    const CALCULATIONS={
+      getWinTrades:(d)=>Math.round(d.kpi.totalTrades*d.kpi.winRate/100),
+      getLossTrades:(d)=>Math.round(d.kpi.totalTrades*(100-d.kpi.winRate)/100),
+      getTotalWinAmount:(d)=>Math.round(CALCULATIONS.getWinTrades(d)*d.kpi.avgProfit),
+      getTotalLossAmount:(d)=>Math.round(Math.abs(CALCULATIONS.getLossTrades(d)*d.kpi.avgLoss)),
+      getMaxWin:(d)=>d.pareto.top[0],
+      getMinWin:(d)=>d.pareto.top[d.pareto.top.length-1],
+      getMaxLoss:(d)=>Math.abs(d.pareto.bottom[0]),
+      getMinLoss:(d)=>Math.abs(d.pareto.bottom[d.pareto.bottom.length-1]
+    )};
 
-  function generateRealisticCumulativeCurve(tradeCount, finalProfit, winRate){
-    const result=[0]; let cur=0;
-    for(let i=1;i<tradeCount;i++){
-      const isWin = Math.random() < winRate;
-      if(isWin){
-        const avgWin = finalProfit>0
-          ? Math.abs(finalProfit)/(tradeCount*winRate)*1.2
-          : 8000 + Math.random()*12000;
-        cur += avgWin*(0.7+Math.random()*0.6);
-      }else{
-        const avgLoss = finalProfit>0
-          ? Math.abs(finalProfit)/(tradeCount*(1-winRate))*0.8
-          : 4000 + Math.random()*8000;
-        cur -= avgLoss*(0.7+Math.random()*0.6);
+    function generateRealisticCumulativeCurve(tradeCount,finalProfit,winRate){
+      const result=[0];let cur=0;
+      for(let i=1;i<tradeCount;i++){
+        const isWin=Math.random()<winRate;
+        if(isWin){
+          const avgWin=finalProfit>0?Math.abs(finalProfit)/(tradeCount*winRate)*1.2:8000+Math.random()*12000;
+          cur+=avgWin*(0.7+Math.random()*0.6);
+        }else{
+          const avgLoss=finalProfit>0?Math.abs(finalProfit)/(tradeCount*(1-winRate))*0.8:4000+Math.random()*8000;
+          cur-=avgLoss*(0.7+Math.random()*0.6);
+        }
+        result.push(Math.round(cur));
       }
-      result.push(Math.round(cur));
+      const adjust=finalProfit-result[result.length-1];
+      const per=adjust/(tradeCount*0.3);
+      const start=Math.floor(tradeCount*0.7);
+      for(let i=start;i<tradeCount;i++) result[i]+=Math.round(per*(i-start));
+      return result;
     }
-    const adjust = finalProfit - result[result.length-1];
-    const per = adjust / (tradeCount*0.3);
-    const start = Math.floor(tradeCount*0.7);
-    for(let i=start;i<tradeCount;i++){
-      result[i] += Math.round(per*(i-start));
-    }
-    return result;
-  }
 
-  const CATEGORY_DATA = {
-    getBasicMetrics: (key)=>{
-      const t=DEMO_TRADERS[key];
-      return {
-        ...t.kpi,
-        delta:t.delta,
-        winTrades: CALCULATIONS.getWinTrades(t),
-        lossTrades: CALCULATIONS.getLossTrades(t),
-        totalWinAmount: CALCULATIONS.getTotalWinAmount(t),
-        totalLossAmount: CALCULATIONS.getTotalLossAmount(t),
-        maxWin: CALCULATIONS.getMaxWin(t),
-        minWin: CALCULATIONS.getMinWin(t),
-        maxLoss: CALCULATIONS.getMaxLoss(t),
-        minLoss: CALCULATIONS.getMinLoss(t)
-      };
-    },
-    getRiskMetrics: (key)=>({
-      maxDrawdown: DEMO_TRADERS[key].kpi.totalProfit * -0.15,
-      volatility: key==='excellent'?0.12:key==='average'?0.28:0.45,
-      sharpeRatio: key==='excellent'?2.15:key==='average'?0.85:-0.32
-    }),
-    getTimeAnalysis: (key)=>({
-      excellent:{ bestDay:"火曜日", worstDay:"金曜日" },
-      average:{ bestDay:"水曜日", worstDay:"月曜日" },
-      poor:{ bestDay:"木曜日", worstDay:"月曜日" }
-    })[key],
-    getSymbolAnalysis: (key)=>{
-      const symbols=['USDJPY','EURUSD','GBPUSD','EURJPY','GBPJPY'];
-      return symbols.map(symbol=>({
-        symbol,
-        performance: key==='excellent'?'good':key==='average'?'neutral':'poor'
-      }));
-    }
-  };
-
-  const AppStore = {
-    cfg:{ mode:'demo', trader:'excellent', version:'v1', show_demo_badge:true },
-    data:null, filters:{},
-    listeners:new Set(),
-    subscribe(fn){ this.listeners.add(fn); return ()=>this.listeners.delete(fn); },
-    notify(){ for(const fn of this.listeners) fn({ cfg:this.cfg, data:this.data, filters:this.filters }); },
-    setConfig(part){ Object.assign(this.cfg, part); this.persistCfg(); this.notify(); },
-    setData(d){ this.data=d; this.notify(); },
-    setFilters(f){ this.filters=f; this.notify(); },
-    persistCfg(){ try { localStorage.setItem('demo_cfg', JSON.stringify(this.cfg)); } catch {} },
-    restoreCfg(){
-      try {
-        const saved = JSON.parse(localStorage.getItem('demo_cfg')||'null');
-        if(saved) this.cfg = { ...this.cfg, ...saved };
-      } catch {}
-      const q=new URLSearchParams(location.search);
-      if(q.get('trader')) this.cfg.trader = q.get('trader');
-      if(q.get('mode')) this.cfg.mode = q.get('mode');
-    }
-  };
-  window.AppStore = AppStore;
-
-  function dispatch(name, detail){ document.dispatchEvent(new CustomEvent(name,{ detail })); }
-
-  function buildUnifiedDemo(traderKey){
-    const t = DEMO_TRADERS[traderKey] || DEMO_TRADERS.excellent;
-    const basic = CATEGORY_DATA.getBasicMetrics(traderKey);
-    const risk  = CATEGORY_DATA.getRiskMetrics(traderKey);
-    const time  = CATEGORY_DATA.getTimeAnalysis(traderKey);
-    const sym   = CATEGORY_DATA.getSymbolAnalysis(traderKey);
-    const curve = generateRealisticCumulativeCurve(t.kpi.totalTrades, t.kpi.totalProfit, t.kpi.winRate/100);
-    return {
-      key: traderKey,
-      meta: { name:t.name, description:t.description, version:AppStore.cfg.version },
-      kpi: basic, risk, time, symbols:sym,
-      streaks: t.streaks, pareto: t.pareto,
-      equityCurve: curve
+    const CATEGORY_DATA={
+      getBasicMetrics:(key)=>{
+        const t=DEMO_TRADERS[key];
+        return {...t.kpi,delta:t.delta,
+          winTrades:CALCULATIONS.getWinTrades(t),
+          lossTrades:CALCULATIONS.getLossTrades(t),
+          totalWinAmount:CALCULATIONS.getTotalWinAmount(t),
+          totalLossAmount:CALCULATIONS.getTotalLossAmount(t),
+          maxWin:CALCULATIONS.getMaxWin(t),
+          minWin:CALCULATIONS.getMinWin(t),
+          maxLoss:CALCULATIONS.getMaxLoss(t),
+          minLoss:CALCULATIONS.getMinLoss(t)};
+      },
+      getRiskMetrics:(key)=>({
+        maxDrawdown:DEMO_TRADERS[key].kpi.totalProfit*-0.15,
+        volatility:key==='excellent'?0.12:key==='average'?0.28:0.45,
+        sharpeRatio:key==='excellent'?2.15:key==='average'?0.85:-0.32
+      }),
+      getTimeAnalysis:(key)=>({
+        excellent:{bestDay:"火曜日",worstDay:"金曜日"},
+        average:{bestDay:"水曜日",worstDay:"月曜日"},
+        poor:{bestDay:"木曜日",worstDay:"月曜日"}
+      })[key],
+      getSymbolAnalysis:(key)=>{
+        const symbols=['USDJPY','EURUSD','GBPUSD','EURJPY','GBPJPY'];
+        return symbols.map(symbol=>({symbol,performance:key==='excellent'?'good':key==='average'?'neutral':'poor'}));
+      }
     };
-  }
 
-  function renderHeaderSummary(d){ /* 今は未使用でも残してOK */ }
-
-  function updateDemoBadge(){
-    const b=document.getElementById('demoBadge');
-    b.hidden = !(AppStore.cfg.mode==='demo' && AppStore.cfg.show_demo_badge);
-    if(!b.hidden) b.textContent = `DEMO • ${AppStore.cfg.trader} • ${AppStore.cfg.version}`;
-  }
-
-  function selectDemoButton(trader){
-    document.querySelectorAll('.demo-btn').forEach(btn=>{
-      btn.classList.toggle('active', btn.dataset.trader===trader);
-    });
-  }
-
-  function activateTrader(traderKey){
-    AppStore.setConfig({ trader: traderKey });
-    const unified = buildUnifiedDemo(traderKey);
-    AppStore.setData(unified);
-    renderHeaderSummary(unified);
-    updateDemoBadge();
-    selectDemoButton(traderKey);
-    dispatch('demoDataReady', unified);
-  }
-
-  function initializeDemoUI(){
-    document.querySelectorAll('.demo-btn').forEach(btn=>{
-      btn.addEventListener('click', ()=> activateTrader(btn.dataset.trader));
-    });
-  }
-
-  function initializeFileUpload(){
-    const input = document.getElementById('fileInput');
-    const info  = document.getElementById('fileInfo');
-    input.addEventListener('change', (ev)=>{
-      const file = ev.target.files[0];
-      if(!file) return;
-      info.style.display='block';
-      info.textContent = `${file.name} (${(file.size/1024).toFixed(1)} KB)`;
-      dispatch('fileUploaded', file);
-    });
-  }
-
-  function initializeFilters(){
-    const periodFilter = document.getElementById('periodFilter');
-    const customDateGroup = document.getElementById('customDateGroup');
-    periodFilter.addEventListener('change', function(){
-      if(this.value==='custom') customDateGroup.classList.add('active');
-      else customDateGroup.classList.remove('active');
-    });
-
-    document.getElementById('applyFilters').addEventListener('click', ()=>{
-      const f = getFilterValues();
-      AppStore.setFilters(f);
-      dispatch('filtersChanged', f);
-    });
-
-    document.getElementById('resetFilters').addEventListener('click', ()=>{
-      resetAllFilters();
-      const f = getFilterValues();
-      AppStore.setFilters(f);
-      dispatch('filtersChanged', f);
-    });
-  }
-
-  function getFilterValues(){
-    return {
-      currency: document.getElementById('currencyFilter').value,
-      time: document.getElementById('timeFilter').value,
-      day: document.getElementById('dayFilter').value,
-      period: document.getElementById('periodFilter').value,
-      startDate: document.getElementById('startDate').value,
-      endDate: document.getElementById('endDate').value,
-      performance: document.getElementById('performanceFilter').value,
-      position: document.getElementById('positionFilter').value
+    // 単一情報源ストア
+    const AppStore={
+      cfg:{mode:'demo',trader:'excellent',version:'v1',show_demo_badge:true},
+      data:null,filters:{},listeners:new Set(),
+      subscribe(fn){this.listeners.add(fn);return()=>this.listeners.delete(fn);},
+      notify(){for(const fn of this.listeners) fn({cfg:this.cfg,data:this.data,filters:this.filters});},
+      setConfig(part){Object.assign(this.cfg,part);this.persistCfg();this.notify();},
+      setData(d){this.data=d;this.notify();},
+      setFilters(f){this.filters=f;this.notify();},
+      persistCfg(){try{localStorage.setItem('demo_cfg',JSON.stringify(this.cfg));}catch{}},
+      restoreCfg(){
+        try{const saved=JSON.parse(localStorage.getItem('demo_cfg')||'null');if(saved) this.cfg={...this.cfg,...saved};}catch{}
+        const q=new URLSearchParams(location.search);
+        if(q.get('trader')) this.cfg.trader=q.get('trader');
+        if(q.get('mode')) this.cfg.mode=q.get('mode');
+      }
     };
-  }
+    window.AppStore=AppStore;
 
-  function resetAllFilters(){
-    document.getElementById('currencyFilter').value='all';
-    document.getElementById('timeFilter').value='all';
-    document.getElementById('dayFilter').value='all';
-    document.getElementById('periodFilter').value='all';
-    document.getElementById('startDate').value='';
-    document.getElementById('endDate').value='';
-    document.getElementById('performanceFilter').value='all';
-    document.getElementById('positionFilter').value='all';
-    document.getElementById('customDateGroup').classList.remove('active');
-  }
+    function dispatch(name,detail){document.dispatchEvent(new CustomEvent(name,{detail}));}
 
-  function initializeTabs(){
-    const tabs = document.querySelectorAll('.tab');
-    tabs.forEach(tab=>{
-      tab.addEventListener('click', ()=>{
-        tabs.forEach(t=>t.classList.remove('active'));
-        tab.classList.add('active');
-        dispatch('tabChanged', { section: tab.dataset.section });
+    function buildUnifiedDemo(traderKey){
+      const t=DEMO_TRADERS[traderKey]||DEMO_TRADERS.excellent;
+      const basic=CATEGORY_DATA.getBasicMetrics(traderKey);
+      const risk=CATEGORY_DATA.getRiskMetrics(traderKey);
+      const time=CATEGORY_DATA.getTimeAnalysis(traderKey);
+      const sym=CATEGORY_DATA.getSymbolAnalysis(traderKey);
+      const curve=generateRealisticCumulativeCurve(t.kpi.totalTrades,t.kpi.totalProfit,t.kpi.winRate/100);
+      return {key:traderKey,meta:{name:t.name,description:t.description,version:AppStore.cfg.version},
+        kpi:basic,risk,time,symbols:sym,streaks:t.streaks,pareto:t.pareto,equityCurve:curve};
+    }
+
+    function renderHeaderSummary(_d){/* いまは未使用 */}
+
+    function updateDemoBadge(){
+      const b=document.getElementById('demoBadge');
+      b.hidden=!(AppStore.cfg.mode==='demo'&&AppStore.cfg.show_demo_badge);
+      if(!b.hidden) b.textContent=`DEMO • ${AppStore.cfg.trader} • ${AppStore.cfg.version}`;
+    }
+
+    function selectDemoButton(trader){
+      document.querySelectorAll('.demo-btn').forEach(btn=>{
+        btn.classList.toggle('active',btn.dataset.trader===trader);
       });
+    }
+
+    function activateTrader(traderKey){
+      AppStore.setConfig({trader:traderKey});
+      const unified=buildUnifiedDemo(traderKey);
+      AppStore.setData(unified);
+      renderHeaderSummary(unified);
+      updateDemoBadge();
+      selectDemoButton(traderKey);
+      dispatch('demoDataReady',unified);
+    }
+
+    // 初期化
+    function initializeDemoUI(){
+      document.querySelectorAll('.demo-btn').forEach(btn=>{
+        btn.addEventListener('click',()=>activateTrader(btn.dataset.trader));
+      });
+    }
+    function initializeFileUpload(){
+      const input=document.getElementById('fileInput');
+      const info=document.getElementById('fileInfo');
+      input.addEventListener('change',(ev)=>{
+        const file=ev.target.files[0]; if(!file) return;
+        info.style.display='block';
+        info.textContent=`${file.name} (${(file.size/1024).toFixed(1)} KB)`;
+        dispatch('fileUploaded',file);
+      });
+    }
+    function initializeFilters(){
+      const periodFilter=document.getElementById('periodFilter');
+      const customDateGroup=document.getElementById('customDateGroup');
+      periodFilter.addEventListener('change',function(){
+        if(this.value==='custom') customDateGroup.classList.add('active');
+        else customDateGroup.classList.remove('active');
+      });
+      document.getElementById('applyFilters').addEventListener('click',()=>{
+        const f=getFilterValues(); AppStore.setFilters(f); dispatch('filtersChanged',f);
+      });
+      document.getElementById('resetFilters').addEventListener('click',()=>{
+        resetAllFilters(); const f=getFilterValues(); AppStore.setFilters(f); dispatch('filtersChanged',f);
+      });
+    }
+    function getFilterValues(){
+      return{
+        currency:document.getElementById('currencyFilter').value,
+        time:document.getElementById('timeFilter').value,
+        day:document.getElementById('dayFilter').value,
+        period:document.getElementById('periodFilter').value,
+        startDate:document.getElementById('startDate').value,
+        endDate:document.getElementById('endDate').value,
+        performance:document.getElementById('performanceFilter').value,
+        position:document.getElementById('positionFilter').value
+      };
+    }
+    function resetAllFilters(){
+      document.getElementById('currencyFilter').value='all';
+      document.getElementById('timeFilter').value='all';
+      document.getElementById('dayFilter').value='all';
+      document.getElementById('periodFilter').value='all';
+      document.getElementById('startDate').value='';
+      document.getElementById('endDate').value='';
+      document.getElementById('performanceFilter').value='all';
+      document.getElementById('positionFilter').value='all';
+      document.getElementById('customDateGroup').classList.remove('active');
+    }
+    function initializeTabs(){
+      const tabs=document.querySelectorAll('.tab');
+      tabs.forEach(tab=>{
+        tab.addEventListener('click',()=>{
+          tabs.forEach(t=>t.classList.remove('active'));
+          tab.classList.add('active');
+          dispatch('tabChanged',{section:tab.dataset.section});
+        });
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded',()=>{
+      initializeDemoUI();
+      initializeFileUpload();
+      initializeFilters();
+      initializeTabs();
+      AppStore.restoreCfg();
+      updateDemoBadge();
+      selectDemoButton(AppStore.cfg.trader);
+      const initData=buildUnifiedDemo(AppStore.cfg.trader);
+      AppStore.setData(initData);
+      renderHeaderSummary(initData);
+      dispatch('demoDataReady',initData);
     });
-  }
-
-  window.addEventListener('DOMContentLoaded', ()=>{
-    initializeDemoUI();
-    initializeFileUpload();
-    initializeFilters();
-    initializeTabs();
-
-    AppStore.restoreCfg();
-    updateDemoBadge();
-    selectDemoButton(AppStore.cfg.trader);
-
-    const initData = buildUnifiedDemo(AppStore.cfg.trader);
-    AppStore.setData(initData);
-    renderHeaderSummary(initData);
-    dispatch('demoDataReady', initData);
-  });
   </script>
 </body>
 </html>
