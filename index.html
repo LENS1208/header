@@ -23,8 +23,7 @@
     .header-container { background:var(--bg-secondary); border-bottom:1px solid var(--border-color); box-shadow:0 4px 20px rgba(0,0,0,.5); }
     .header-main { padding:15px 20px; display:flex; align-items:center; justify-content:space-between; min-height:70px; }
     .left-section { display:flex; align-items:center; }
-    .logo { width:50px; height:33px; display:flex; align-items:center; justify-content:center; }
-    .logo img { width:100%; height:auto; max-width:50px; }
+    .logo img { display:block; width:50px; height:auto; }
     .center-section { flex:1; text-align:center; min-width:300px; }
     .main-title { font-size:20px; font-weight:700; color:var(--text-main); margin-bottom:4px; }
     .subtitle { font-size:12px; color:var(--text-sub); font-weight:400; }
@@ -110,22 +109,24 @@
   <div id="demoBadge" hidden>DEMO</div>
   <header class="header-container">
     <div class="header-main">
-<div class="left-section">
-  <div class="logo">
-    <img src="algo-logo-web-b.png" alt="FX Analysis Logo" width="50" height="33" />
-  </div>
-</div>
+      <!-- 左上ロゴ（固定PNG） -->
+      <div class="left-section">
+        <div class="logo">
+          <img src="algo-logo-web-b.png" alt="FX Analysis Logo" width="50" height="33" />
+        </div>
+      </div>
+
       <div class="center-section">
         <h1 class="main-title">FX取引分析ダッシュボード</h1>
         <p class="subtitle">パフォーマンス分析とリスク管理の統合プラットフォーム</p>
         <div class="header-kpi" id="headerSummary">
-          <!-- 勝率 / PF / 総損益 を反映 -->
           <span>プロファイル: <b id="hsName">—</b></span>
           <span>勝率: <b id="hsWr">—</b></span>
           <span>PF: <b id="hsPf">—</b></span>
           <span>総損益: <b id="hsPnl">—</b></span>
         </div>
       </div>
+
       <div class="right-section">
         <div class="upload-wrapper">
           <input type="file" id="fileInput" class="file-input" accept=".csv,.json" />
@@ -224,34 +225,7 @@
 
   <script>
   // =========================
-  //  ロゴ（存在しなければSVG）
-  // =========================
-  async function loadLogo() {
-    try {
-      if (window.fs && window.fs.readFile) {
-        let logoData;
-        try { logoData = await window.fs.readFile('image-1.png'); }
-        catch(e){ logoData = await window.fs.readFile('image.png'); }
-        const blob = new Blob([logoData], { type:'image/png' });
-        const url = URL.createObjectURL(blob);
-        const img = document.querySelector('.logo img');
-        if(img){ img.src = url; img.style.display='block'; }
-      } else {
-        throw new Error('fs unavailable');
-      }
-    } catch {
-      document.querySelector('.logo').innerHTML = `
-        <svg width="50" height="33" viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" aria-label="logo">
-          <rect x="15" y="28" width="8" height="12" rx="2" fill="#00c8ff"/>
-          <rect x="25" y="20" width="8" height="20" rx="2" fill="#00c8ff"/>
-          <rect x="35" y="8" width="8" height="32" rx="2" fill="#00c8ff"/>
-        </svg>`;
-    }
-  }
-
-  // =========================
   //  デモ・マスターDataset
-  //  （提供仕様を忠実実装）
   // =========================
   const DEMO_TRADERS = {
     excellent: {
@@ -364,9 +338,7 @@
     setConfig(part){ Object.assign(this.cfg, part); this.persistCfg(); this.notify(); },
     setData(d){ this.data=d; this.notify(); },
     setFilters(f){ this.filters=f; this.notify(); },
-    persistCfg(){
-      try { localStorage.setItem('demo_cfg', JSON.stringify(this.cfg)); } catch {}
-    },
+    persistCfg(){ try { localStorage.setItem('demo_cfg', JSON.stringify(this.cfg)); } catch {} },
     restoreCfg(){
       try {
         const saved = JSON.parse(localStorage.getItem('demo_cfg')||'null');
@@ -377,11 +349,10 @@
       if(q.get('mode')) this.cfg.mode = q.get('mode');
     }
   };
-  window.AppStore = AppStore; // 各ページから参照可
+  window.AppStore = AppStore;
 
-  // =========================
-  //  デモ生成＆配布（統率ポイント）
-  // =========================
+  function dispatch(name, detail){ document.dispatchEvent(new CustomEvent(name,{ detail })); }
+
   function buildUnifiedDemo(traderKey){
     const t = DEMO_TRADERS[traderKey] || DEMO_TRADERS.excellent;
     const basic = CATEGORY_DATA.getBasicMetrics(traderKey);
@@ -396,10 +367,6 @@
       streaks: t.streaks, pareto: t.pareto,
       equityCurve: curve
     };
-  }
-
-  function dispatch(name, detail){
-    document.dispatchEvent(new CustomEvent(name,{ detail }));
   }
 
   function renderHeaderSummary(d){
@@ -435,27 +402,22 @@
     dispatch('demoDataReady', unified); // 7ページ横断用
   }
 
-  // =========================
-  //  UI 初期化
-  // =========================
+  // ===== UI 初期化 =====
   function initializeDemoUI(){
     document.querySelectorAll('.demo-btn').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        activateTrader(btn.dataset.trader);
-      });
+      btn.addEventListener('click', ()=> activateTrader(btn.dataset.trader));
     });
   }
 
   function initializeFileUpload(){
     const input = document.getElementById('fileInput');
     const info  = document.getElementById('fileInfo');
-    input.addEventListener('change', async (ev)=>{
+    input.addEventListener('change', (ev)=>{
       const file = ev.target.files[0];
       if(!file) return;
       info.style.display='block';
       info.textContent = `${file.name} (${(file.size/1024).toFixed(1)} KB)`;
       dispatch('fileUploaded', file);
-      // 実データ適用は各ページ側で：demoと同じ描画関数に渡してください
     });
   }
 
@@ -512,42 +474,34 @@
       tab.addEventListener('click', ()=>{
         tabs.forEach(t=>t.classList.remove('active'));
         tab.classList.add('active');
-        const section = tab.dataset.section;
-        // 各ページ側に委譲してOK。ここでは通知のみでも良い。
-        dispatch('tabChanged', { section });
+        dispatch('tabChanged', { section: tab.dataset.section });
       });
     });
   }
 
-  // =========================
-  //  起動
-  // =========================
+  // ===== 起動 =====
   window.addEventListener('DOMContentLoaded', ()=>{
-    loadLogo();
     initializeDemoUI();
     initializeFileUpload();
     initializeFilters();
     initializeTabs();
 
-    // 設定復元 & URL上書き
     AppStore.restoreCfg();
     updateDemoBadge();
     selectDemoButton(AppStore.cfg.trader);
 
-    // 初期デモ配布
     const initData = buildUnifiedDemo(AppStore.cfg.trader);
     AppStore.setData(initData);
     renderHeaderSummary(initData);
     dispatch('demoDataReady', initData);
   });
 
-  // 7ページ側での購読例（参考）：
+  // 7ページ側の購読例（参考）
   // window.AppStore.subscribe(({cfg,data,filters})=>{
   //   if(cfg.mode==='demo' && data){
   //     // data.kpi / data.pareto / data.equityCurve などで描画
   //   }
   // });
-
   </script>
 </body>
 </html>
