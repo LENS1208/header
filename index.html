@@ -20,7 +20,11 @@
       font-family: 'Segoe UI','Hiragino Sans','Yu Gothic UI',system-ui,sans-serif;
       background: var(--bg-primary); color: var(--text-main); min-height:100vh;
     }
-    .header-container { background:var(--bg-secondary); border-bottom:1px solid var(--border-color); box-shadow:0 4px 20px rgba(0,0,0,.5); }
+    .header-container {
+  background: #000; /* ← ここを黒に */
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
     .header-main { padding:15px 20px; display:flex; align-items:center; justify-content:space-between; min-height:70px; }
     .left-section { display:flex; align-items:center; }
     .logo img { display:block; width:100px; height:auto; }
